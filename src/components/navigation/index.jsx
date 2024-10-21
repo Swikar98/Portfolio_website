@@ -1,6 +1,6 @@
 "use client";
 import { BtnList } from "@/app/data";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import NavButton from "./NavButton";
 import useScreenSize from "../hooks/useScreenSize";
 import ResponsiveComponent from "../ResponsiveComponent";
@@ -22,29 +22,19 @@ const Navigation = () => {
   const isLarge = size >= 1024;
   const isMedium = size >= 768;
 
-  // Track whether the spin is complete
-  const [isSpinning, setIsSpinning] = useState(true);
-
-  // Simulate stopping the spin after 5 seconds (you can customize this behavior)
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsSpinning(false);
-    }, 5000); // 5 seconds spin time
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <div className="w-full fixed h-screen flex items-center justify-center">
       <ResponsiveComponent>
         {({ size }) => {
           return size && size >= 480 ? (
             <motion.div
+              drag
+              dragConstraints={{ top: 0, bottom: 0, left: 0, right: 0 }}
+              dragElastic={0.2}
               variants={container}
               initial="hidden"
               animate="show"
-              className={`w-max flex items-center justify-center relative group ${
-                isSpinning ? "animate-spin-slow" : ""
-              }`}
+              className="w-max flex items-center justify-center relative hover:pause animate-spin-slow group hover:opacity-90" // Apply opacity change on hover
             >
               {BtnList.map((btn, index) => {
                 const angleRad = (index * angleIncrement * Math.PI) / 180;
@@ -56,38 +46,60 @@ const Navigation = () => {
                 const x = `calc(${radius}*${Math.cos(angleRad)})`;
                 const y = `calc(${radius}*${Math.sin(angleRad)})`;
 
-                // If spinning is done, position all buttons on the right
-                const finalX = isSpinning ? x : "90%";
-                const finalY = isSpinning ? y : `${index * 10}%`;
-
-                return <NavButton key={btn.label} x={finalX} y={finalY} {...btn} />;
+                return (
+                  <motion.div
+                    key={btn.label}
+                    className="transition-opacity duration-300 group-hover:opacity-90" // Change opacity on hover
+                  >
+                    <NavButton x={x} y={y} {...btn} />
+                  </motion.div>
+                );
               })}
             </motion.div>
           ) : (
             <>
-              {/* Small screen non-spinning layout */}
               <motion.div
+                drag
+                dragConstraints={{ top: 0, bottom: 0, left: 0, right: 0 }}
+                dragElastic={0.2}
                 variants={container}
                 initial="hidden"
                 animate="show"
-                className="w-full px-2.5 xs:p-0 xs:w-max flex flex-col space-y-4 item-start xs:items-center justify-center relative group xs:hidden"
+                className="w-full px-2.5 xs:p-0 xs:w-max flex flex-col space-y-4 item-start xs:items-center justify-center relative group xs:hidden hover:opacity-90"
               >
                 {BtnList.slice(0, BtnList.length / 2).map((btn) => {
-                  return <NavButton key={btn.label} x={0} y={0} {...btn} />;
+                  return (
+                    <motion.div
+                      key={btn.label}
+                      className="transition-opacity duration-300 group-hover:opacity-90"
+                    >
+                      <NavButton x={0} y={0} {...btn} />
+                    </motion.div>
+                  );
                 })}
               </motion.div>
 
               <motion.div
+                drag
+                dragConstraints={{ top: 0, bottom: 0, left: 0, right: 0 }}
+                dragElastic={0.2}
                 variants={container}
                 initial="hidden"
                 animate="show"
-                className="w-full px-2.5 xs:p-0 xs:w-max flex flex-col space-y-4 items-end xs:items-center justify-center relative group xs:hidden"
+                className="w-full px-2.5 xs:p-0 xs:w-max flex flex-col space-y-4 items-end xs:items-center justify-center relative group xs:hidden hover:opacity-90"
               >
-                {BtnList.slice(BtnList.length / 2, BtnList.length).map((btn) => {
-                  return (
-                    <NavButton key={btn.label} x={0} y={0} {...btn} labelDirection="left" />
-                  );
-                })}
+                {BtnList.slice(BtnList.length / 2, BtnList.length).map(
+                  (btn) => {
+                    return (
+                      <motion.div
+                        key={btn.label}
+                        className="transition-opacity duration-300 group-hover:opacity-90"
+                      >
+                        <NavButton x={0} y={0} {...btn} labelDirection="left" />
+                      </motion.div>
+                    );
+                  }
+                )}
               </motion.div>
             </>
           );
