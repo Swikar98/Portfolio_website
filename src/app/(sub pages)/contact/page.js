@@ -23,7 +23,7 @@ export default function Contact() {
             Contact US
           </h1>
           <p className="text-center font-light text-sm xs:text-base">
-          We'd love to hear from you! If you have any questions, feedback, or inquiries, please feel free to reach out.
+          We would love to hear from you! If you have any questions, feedback, or inquiries, please feel free to reach out.
           </p>
         </div>
         <Form />
