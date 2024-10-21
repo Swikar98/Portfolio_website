@@ -66,7 +66,7 @@ const NavButton = ({
               variants={item}
               href={link}
               target={newTab ? "_blank" : "_self"}
-              className="text-foreground  rounded-full flex items-center justify-center
+              className="text-foreground   flex items-center justify-center
         custom-bg
         "
               aria-label={label}
@@ -74,7 +74,7 @@ const NavButton = ({
               prefetch={false}
               scroll={false}
             >
-              <span className="relative  w-14 h-14 p-4 animate-spin-slow-reverse group-hover:pause hover:text-accent">
+              <span className="relative  w-14 h-14 p-4 animate-spin-slow-reverse group-hover:pause group-hover:to-90% hover:blue-300">
                 {getIcon(icon)}
 
                 <span className="peer bg-transparent absolute top-0 left-0 w-full h-full" />
@@ -91,7 +91,7 @@ const NavButton = ({
               variants={item}
               href={link}
               target={newTab ? "_blank" : "_self"}
-              className="text-foreground  rounded-full flex items-center justify-center
+              className="text-foreground   flex items-center justify-center
         custom-bg
         "
               aria-label={label}
@@ -99,7 +99,7 @@ const NavButton = ({
               prefetch={false}
               scroll={false}
             >
-              <span className="relative  w-10 h-10  xs:w-14 xs:h-14 p-2.5 xs:p-4 hover:text-accent">
+              <span className="relative  w-10 h-10  xs:w-14 xs:h-14 p-2.5 xs:p-4 hover:blue-300">
                 {getIcon(icon)}
 
                 <span className="peer bg-transparent absolute top-0 left-0 w-full h-full" />
