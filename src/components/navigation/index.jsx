@@ -28,13 +28,10 @@ const Navigation = () => {
         {({ size }) => {
           return size && size >= 480 ? (
             <motion.div
-              drag
-              dragConstraints={{ top: 0, bottom: 0, left: 0, right: 0 }}
-              dragElastic={0.2}
               variants={container}
               initial="hidden"
               animate="show"
-              className="w-max flex items-center justify-center relative hover:pause animate-spin-slow group hover:opacity-90" // Apply opacity change on hover
+              className="w-max flex items-center justify-center relative hover:pause animate-spin-slow group"
             >
               {BtnList.map((btn, index) => {
                 const angleRad = (index * angleIncrement * Math.PI) / 180;
@@ -46,57 +43,38 @@ const Navigation = () => {
                 const x = `calc(${radius}*${Math.cos(angleRad)})`;
                 const y = `calc(${radius}*${Math.sin(angleRad)})`;
 
-                return (
-                  <motion.div
-                    key={btn.label}
-                    className="transition-opacity duration-300 group-hover:opacity-90" // Change opacity on hover
-                  >
-                    <NavButton x={x} y={y} {...btn} />
-                  </motion.div>
-                );
+                return <NavButton key={btn.label} x={x} y={y} {...btn} />;
               })}
             </motion.div>
           ) : (
             <>
               <motion.div
-                drag
-                dragConstraints={{ top: 0, bottom: 0, left: 0, right: 0 }}
-                dragElastic={0.2}
                 variants={container}
                 initial="hidden"
                 animate="show"
-                className="w-full px-2.5 xs:p-0 xs:w-max flex flex-col space-y-4 item-start xs:items-center justify-center relative group xs:hidden hover:opacity-90"
+                className="w-full px-2.5 xs:p-0 xs:w-max flex flex-col space-y-4 item-start xs:items-center justify-center relative  group xs:hidden"
               >
                 {BtnList.slice(0, BtnList.length / 2).map((btn) => {
-                  return (
-                    <motion.div
-                      key={btn.label}
-                      className="transition-opacity duration-300 group-hover:opacity-90"
-                    >
-                      <NavButton x={0} y={0} {...btn} />
-                    </motion.div>
-                  );
+                  return <NavButton key={btn.label} x={0} y={0} {...btn} />;
                 })}
               </motion.div>
 
               <motion.div
-                drag
-                dragConstraints={{ top: 0, bottom: 0, left: 0, right: 0 }}
-                dragElastic={0.2}
                 variants={container}
                 initial="hidden"
                 animate="show"
-                className="w-full px-2.5 xs:p-0 xs:w-max flex flex-col space-y-4 items-end xs:items-center justify-center relative group xs:hidden hover:opacity-90"
+                className="w-full px-2.5 xs:p-0 xs:w-max flex flex-col space-y-4 items-end xs:items-center justify-center relative group xs:hidden"
               >
                 {BtnList.slice(BtnList.length / 2, BtnList.length).map(
                   (btn) => {
                     return (
-                      <motion.div
+                      <NavButton
                         key={btn.label}
-                        className="transition-opacity duration-300 group-hover:opacity-90"
-                      >
-                        <NavButton x={0} y={0} {...btn} labelDirection="left" />
-                      </motion.div>
+                        x={0}
+                        y={0}
+                        {...btn}
+                        labelDirection="left"
+                      />
                     );
                   }
                 )}
